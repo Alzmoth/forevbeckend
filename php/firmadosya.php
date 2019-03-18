@@ -34,7 +34,9 @@ set_time_limit(20);//max_execution_time değeri olabilecek en üst değere getir
 
 $db->set_charset("utf8");
 //tablo ismi aşağıda yazılmak zorunda
-$stmt=$db->prepare("insert into firmalar set firma_id=? , firma_kodu=?, firma_adi=?, alis_iskonto=?, max_iskonto=? ,aktiflik=? ");
+$stmt=$db->prepare("insert into urunler set firma_kodu=? , stok_kodu=?, stok_adi=?, foto_adi=?, barkod=? ,
+stok_olcu_birim=? ,kdv_oran=? , kdvsiz_satis_fiyat=?, doviz_cins=?, guncelleme_tarih=?, olcu=? ,sube1_stokadet=? ,
+sube2_stokadet=? , sube3_stokadet=?, sube4_stokadet=?");
 
 if(!$stmt){
     throw new Exception($stmt->error);
@@ -51,33 +53,39 @@ $lastRow = $worksheet->getHighestRow();
 echo "<table>";
 for ($row = 2; $row <= $lastRow; $row++) {
     echo "<tr><td>";
-    echo $firma_id=$worksheet->getCell('A'.$row)->getValue();
+    echo $firma_kodu=$worksheet->getCell('A'.$row)->getValue();
     echo "</td><td>";
-    echo $firma_kodu=$worksheet->getCell('B'.$row)->getValue();
+    echo $stok_kodu=$worksheet->getCell('B'.$row)->getValue();
     echo "</td><td>";
-    echo $firma_adi=$worksheet->getCell('C'.$row)->getValue();
+    echo $stok_adi=$worksheet->getCell('C'.$row)->getValue();
     echo "</td><td>";
-    echo $alis_iskonto=$worksheet->getCell('D'.$row)->getValue();
+    echo $foto_adi=$worksheet->getCell('D'.$row)->getValue();
     echo "</td><td>";
-    echo $max_iskonto=$worksheet->getCell('E'.$row)->getValue(bigint);
+    echo $barkod=$worksheet->getCell('E'.$row)->getValue(bigint);
     echo "</td><td>";
-    echo $aktiflik=$worksheet->getCell('F'.$row)->getValue();
-    /*echo "</td><td>";
+    echo $stok_olcu_birim=$worksheet->getCell('F'.$row)->getValue();
+    echo "</td><td>";
     echo $kdv_oran=$worksheet->getCell('G'.$row)->getValue();
     echo "</td><td>";
-    echo $kdv_dahil_satis_fiyat=$worksheet->getCell('H'.$row)->getValue(bigint);
+    echo $kdvsiz_satis_fiyat=$worksheet->getCell('H'.$row)->getValue(bigint);
     echo "</td><td>";
     echo $doviz_cins=$worksheet->getCell('I'.$row)->getValue();
     echo "</td><td>";
-    echo $sabit_iskonto=$worksheet->getCell('J'.$row)->getValue();
+    echo $guncelleme_tarih=$worksheet->getCell('J'.$row)->getValue();
     echo "</td><td>";
-    echo $max_iskonto=$worksheet->getCell('K'.$row)->getValue();
+    echo $olcu=$worksheet->getCell('K'.$row)->getValue();
     echo "</td><td>";
-    echo $stok_adet=$worksheet->getCell('L'.$row)->getValue();
+    echo $sube1_stokadet=$worksheet->getCell('L'.$row)->getValue();
     echo "</td><td>";
-    echo $guncelleme_tarih=$worksheet->getCell('M'.$row)->getValue();*/
+    echo $sube2_stokadet=$worksheet->getCell('M'.$row)->getValue();
+    echo "</td><td>";
+    echo $sube3_stokadet=$worksheet->getCell('N'.$row)->getValue();
+    echo "</td><td>";
+    echo $sube4_stokadet=$worksheet->getCell('O'.$row)->getValue();
     echo "</td><tr>";
-    $stmt->bind_param("issiii",$firma_id, $firma_kodu, $firma_adi , $alis_iskonto ,$max_iskonto, $aktiflik, );
+    $stmt->bind_param("ssssisiisisiiii",$firma_kodu, $stok_kodu, $stok_adi 
+    , $foto_adi ,$barkod, $stok_olcu_birim, $kdv_oran,$kdvsiz_satis_fiyat, $doviz_cins, $guncelleme_tarih 
+    , $olcu ,$sube1_stokadet, $sube2_stokadet, $sube3_stokadet,$sube4_stokadet);
     //$stmt->bindParam("barkod", $barkod, PDO::PARAM_INT);
     $kayit=$stmt->execute();
 }
@@ -97,3 +105,4 @@ $db->close();
 </center>
 </body>
 </html>
+

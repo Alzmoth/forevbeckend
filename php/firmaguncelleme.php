@@ -44,9 +44,9 @@
                                echo '  
                                <tr>  
                                      <td>'.$row["firma_kodu"].'</td>  
-                                    <td>'.$row["firma_adi"].'</td>  
-                                    <td>'.$row["alis_iskonto"].'</td>  
-                                    <td>'.$row["max_iskonto"].'</td>  
+                                     <td>'.$row["firma_adi"].'</td>  
+                                     <td>'.$row["alis_iskonto"].'</td>  
+                                     <td>'.$row["max_iskonto"].'</td>  
                                 
     
                                </tr>  
