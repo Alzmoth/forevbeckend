@@ -1,6 +1,6 @@
 <?php
 
-//update_data.php
+//insert_data.php
 
 include('database_connection.php');
 
@@ -9,12 +9,11 @@ if(isset($_POST["firma_kodu"]))
  $error = '';
  $success = '';
  $firma_kodu = '';
- $firma_adi = '';
+ $address = '';
  $alis_iskonto = '';
  $max_iskonto = '';
  $images = '';
- $gender = $_POST["gender"];
- $max_iskonto = $_POST["max_iskonto"];
+ $firma_adi = $_POST["firma_adi"];
  if(empty($_POST["firma_kodu"]))
  {
   $error .= '<p>firma_kodu is Required</p>';
@@ -23,13 +22,13 @@ if(isset($_POST["firma_kodu"]))
  {
   $firma_kodu = $_POST["firma_kodu"];
  }
- if(empty($_POST["firma_adi"]))
+ if(empty($_POST["address"]))
  {
-  $error .= '<p>firma_adi is Required</p>';
+  $error .= '<p>Address is Required</p>';
  }
  else
  {
-  $firma_adi = $_POST["firma_adi"];
+  $address = $_POST["address"];
  }
  if(empty($_POST["alis_iskonto"]))
  {
@@ -48,14 +47,12 @@ if(isset($_POST["firma_kodu"]))
   $max_iskonto = $_POST["max_iskonto"];
  }
 
- $images = $_POST['hidden_images'];
-
- if(isset($_FILES["images"]["name"]) && $_FILES["images"]["name"] != '')
+ if(isset($_FILES["images"]["firma_kodu"]) && $_FILES["images"]["firma_kodu"] != '')
  {
-  $image_name = $_FILES["images"]["name"];
-  $array = explode(".", $image_name);
+  $image_firma_kodu = $_FILES["images"]["firma_kodu"];
+  $array = explode(".", $image_firma_kodu);
   $extension = end($array);
-  $temporary_name = $_FILES["images"]["tmp_name"];
+  $temporary_firma_kodu = $_FILES["images"]["tmp_firma_kodu"];
   $allowed_extension = array("jpg","png");
   if(!in_array($extension, $allowed_extension))
   {
@@ -64,40 +61,35 @@ if(isset($_POST["firma_kodu"]))
   else
   {
    $images = rand() . '.' . $extension;
-   move_uploaded_file($temporary_name, 'images/' . $images);
+   move_uploaded_file($temporary_firma_kodu, 'images/' . $images);
   }
  }
  if($error == '')
  {
   $data = array(
    ':firma_kodu'   => $firma_kodu,
+   ':address'  => $address,
    ':firma_adi'  => $firma_adi,
-   ':max_iskonto'  => $max_iskonto,
    ':alis_iskonto' => $alis_iskonto,
-   ':gender'  => $gender,
-   ':images'  => $images,
-   ':id'   => $_POST["id"]
+   ':max_iskonto'   => $max_iskonto,
+   ':images'  => $images
   );
 
   $query = "
-  UPDATE firmalar 
-  SET firma_kodu = :firma_kodu,
-  firma_adi = :firma_adi,
-  max_iskonto = :max_iskonto, 
-  alis_iskonto = :alis_iskonto, 
-  gender = :gender, 
-  images = :images 
-  WHERE id = :id
+  INSERT INTO firmalar 
+  (firma_kodu, address, firma_adi, alis_iskonto, max_iskonto, images) 
+  VALUES (:firma_kodu, :address, :firma_adi, :alis_iskonto, :max_iskonto, :images)
   ";
   $statement = $connect->prepare($query);
   $statement->execute($data);
-  $success = 'Employee Data Updated';
+  $success = 'Employee Data Inserted';
  }
  $output = array(
   'success'  => $success,
   'error'   => $error
  );
  echo json_encode($output);
+ echo json_encode($data);
 }
 
 ?>

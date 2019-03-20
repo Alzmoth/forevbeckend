@@ -1,11 +1,11 @@
 
 <div class="form-group">
- <label>Enter Employee firma_kodu</label>
- <input type="text" name="firma_kodu" id="firma_kodu" class="form-control" />
+ <label>Enter Employee Name</label>
+ <input type="text" name="name" id="name" class="form-control" />
 </div>
 <div class="form-group">
- <label>Enter Employee firma_adi</label>
- <textarea name="firma_adi" id="firma_adi" class="form-control"></textarea>
+ <label>Enter Employee Address</label>
+ <textarea name="address" id="address" class="form-control"></textarea>
 </div>
 <div class="form-group">
  <label>Enter Employee Gender</label>
@@ -16,7 +16,7 @@
 </div>
 <div class="form-group">
  <label>Enter Employee Desingation</label>
- <input type="text" name="alis_iskonto" id="alis_iskonto" class="form-control" />
+ <input type="text" name="designation" id="designation" class="form-control" />
 </div>
 <div class="form-group">
  <label>Enter Employee max_iskonto</label>
@@ -32,17 +32,17 @@
 <script>
  $(document).ready(function () {
 
-  var firma_kodu = localStorage.getItem('firma_kodu');
-  var firma_adi = localStorage.getItem('firma_adi');
+  var name = localStorage.getItem('name');
+  var address = localStorage.getItem('address');
   var gender = localStorage.getItem('gender');
-  var alis_iskonto = localStorage.getItem('alis_iskonto');
+  var designation = localStorage.getItem('designation');
   var max_iskonto = localStorage.getItem('max_iskonto');
   var images = localStorage.getItem('images');
 
-  $('#firma_kodu').val(firma_kodu);
-  $('#firma_adi').val(firma_adi);
+  $('#name').val(name);
+  $('#address').val(address);
   $('#gender').val(gender);
-  $('#alis_iskonto').val(alis_iskonto);
+  $('#designation').val(designation);
   $('#max_iskonto').val(max_iskonto);
 
   if(images != '')
